@@ -15,7 +15,8 @@ Features
 
 Technologies used 
 
-- created file originally on python
+- language / gitignore based on python 
+- file was originated on python
 
 Future Improvements 
 
