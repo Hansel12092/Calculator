@@ -24,3 +24,4 @@ Future Improvements
 
 License
 - Mit
+- I chose MIT license because it is very simple and permissive, it allows use, modification, distribution, and commercial use with minimal requirements (just attribution).
