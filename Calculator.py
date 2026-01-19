@@ -1,0 +1,135 @@
+# Ask user to input numbers
+
+n1 = float(input("First number: "))
+
+n2 = float(input("Second number: "))
+
+# input operators OvO
+
+op = input("Operator (+, -, *, /): ").strip()
+
+# set up equations 
+
+try:
+    res = {
+
+        "+": n1 + n2,
+        
+        "-": n1 - n2,
+        
+        "*": n1 * n2,
+        ""
+        "/": n1 / n2,}[op]
+
+except ZeroDivisionError:
+    
+    print("Error: Division by zero.")
+    
+    res = None
+
+except KeyError:
+  
+    print("Invalid operator.")
+   
+    res = None
+
+# give user output :3
+
+if res is not None:
+    
+    mode = input("Decimal or whole number? (decimal/whole): ").strip().lower() 
+
+#user's choice to output decimal place or whole numbers *0*
+
+    if mode == "decimal":
+       
+        print("Answer:", n1, op, n2, "=", res)
+
+    elif mode == "whole":
+       
+        if op != "/":
+           
+           n1 = int(n1)
+           
+           n2 = int(n2)
+           
+           res = int(res)
+           
+           print(n1, op, n2, "=", res)
+       
+        else:
+          
+            quotient = int(n1 // n2)
+          
+            remainder = n1 % n2
+          
+            rem = input("Show remainder? (yes/no): ").strip().lower()
+            
+            if rem.startswith == "y":
+                
+                print(n1, op, n2, "=", quotient, "remainder", remainder)
+            
+                
+                print(n1, op, n2, "=", quotient)
+
+    else:
+       
+        print("Invalid format.")
+
+#print out datas ^o^
+
+#bonus features (I dont know what i am looking at ToT) done by the huge assist of chatgpt
+
+import json
+import os
+
+# --- File paths ---
+LAST_RESULT_FILE = "last_result.json"
+VARIABLES_FILE = "variables.json"
+HISTORY_FILE = "history.json"
+
+# --- Load previous data if exists ---
+if os.path.exists(LAST_RESULT_FILE):
+    with open(LAST_RESULT_FILE, "r") as f:
+        last_result_data = json.load(f)
+        last_result = last_result_data.get("last_result", None)
+else:
+    last_result = None
+
+if os.path.exists(VARIABLES_FILE):
+    with open(VARIABLES_FILE, "r") as f:
+        variables = json.load(f)
+else:
+    variables = {}
+
+if os.path.exists(HISTORY_FILE):
+    with open(HISTORY_FILE, "r") as f:
+        history = json.load(f)
+else:
+    history = []
+
+# --- Save the most recent result ---
+if res is not None:
+    last_result = res
+    with open(LAST_RESULT_FILE, "w") as f:
+        json.dump({"last_result": last_result}, f)
+
+    # --- Add to history ---
+    history.append(f"{n1} {op} {n2} = {res}")
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history, f)
+
+    # --- Optionally save as variable ---
+    save_var = input("Save this result as a variable? (name or leave blank): ").strip()
+    if save_var:
+        variables[save_var] = res
+        with open(VARIABLES_FILE, "w") as f:
+            json.dump(variables, f)
+
+# --- Optionally reuse last result for new calculation ---
+if last_result is not None:
+    reuse = input(f"Do you want to use the last result ({last_result}) in a new calculation? (yes/no): ").strip().lower()
+    if reuse.startswith("y"):
+        print("You can now use 'ans' in your next calculation as the last result.")
+
+# --- Dis
